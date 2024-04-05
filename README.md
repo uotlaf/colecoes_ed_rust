@@ -5,12 +5,12 @@ Trabalho original disponível em [colecoes_ed](https://github.com/uotlaf/colecoe
 Implemente o TAD Collection Genérico e o utilize para fazer um programa com os seguintes requisitos(obrigatório utilizar a mesma API):
 
 ### Objetivos
-- [ ] Defina uma estrutura do TIPO ESCOLHIDO(Aluno, Tipo, Time, etc) que tenha pelo menos os seguintes campos:
-  - [ ] Um campo char[30]
-  - [ ] Um campo inteiro
-  - [ ] Um campo float
+- [X] Defina uma [estrutura do TIPO ESCOLHIDO](src/student.rs)(Aluno, Tipo, Time, etc) que tenha pelo menos os seguintes campos:
+  - [X] Um campo char[30]
+  - [X] Um campo inteiro
+  - [X] Um campo float
 - [ ] Implemente as seguintes operações:
-  - [ ] Criar uma coleção
+  - [X] Criar uma coleção
   - [ ] Inserir um TIPO ESCOLHIDO na coleção
   - [ ] Remover um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
   - [ ] Consultar um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
