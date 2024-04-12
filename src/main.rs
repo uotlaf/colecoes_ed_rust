@@ -1,5 +1,5 @@
+use crate::student::StudentList;
 use std::io::stdin;
-use crate::student::{StudentList};
 
 mod student;
 
@@ -11,21 +11,23 @@ macro_rules! read_line {
     };
 }
 
-
 fn main() {
-    let mut input : String = String::new();
-    let mut student_list :StudentList = StudentList::new();
+    let mut input: String = String::new();
+    let mut student_list: StudentList = StudentList::new();
 
     // Valores temporários utilizados nas caixas de seleção do menu
-    let mut name : student::Name;
-    let mut age : student::Age;
-    let mut grade : student::Grade;
-
-
+    let mut name: student::Name;
+    let mut age: student::Age;
+    let mut grade: student::Grade;
 
     'main: loop {
-        println!("Atualmente alocado: {}. Tamanho máximo: {}", student_list.len(), student_list.capacity());
-        println!("\x1b[2J\x1b[HPergunta:
+        println!(
+            "Atualmente alocado: {}. Tamanho máximo: {}",
+            student_list.len(),
+            student_list.capacity()
+        );
+        println!(
+            "\x1b[2J\x1b[HPergunta:
         1 - Criar uma coleção
         2 - Inserir elementos na coleção
         3 - Listar os elementos da coleção
@@ -34,14 +36,20 @@ fn main() {
         6 - Esvaziar a coleção
         7 - Destruir a coleção
         8 - Sair
-        ");
+        "
+        );
 
         // Limpa a input pra entrada no próximo read_line()
         read_line!(input);
 
         match input.trim().parse::<u8>() {
-            Ok(1) => {
-                // Criar coleção
+            Ok(1) => 'early: {
+                // Criar coleção se esta está vazia
+                if !student_list.is_empty() {
+                    println!("Existem estudantes na lista. Não podemos criar uma nova");
+                    break 'early;
+                }
+
                 // Pergunta a quantidade de caracteres
                 'quant: loop {
                     println!("Digite a quantidade de itens para pré-alocar");
@@ -50,20 +58,27 @@ fn main() {
                         Ok(num) => {
                             student_list = StudentList::with_capacity(num);
                             break 'quant;
-                        },
+                        }
                         Err(_) => {
                             println!("Por favor digite um valor válido e entre 0 e 254");
                         }
                     }
                 }
-            },
-            Ok(2) => {
-                // Inserir elementos na coleção
+            }
+            Ok(2) => 'early: {
+                // Insere elementos na coleção se ela existe e não está cheia
+                
+                // verifica se não está cheia e se existe
+                if student_list.len() >= student_list.capacity() {
+                    println!("Não tem espaço suficiente na lista");
+                    break 'early;
+                }
+
                 'data: loop {
                     println!("Digite o nome do indivíduo");
                     read_line!(input);
 
-                    match student::Name::try_from_str(input.clone()) {
+                    match student::Name::try_from_str(input.trim()) {
                         Ok(result) => {
                             name = result;
                             break 'data;
@@ -106,17 +121,18 @@ fn main() {
 
                 match student_list.add(name, age, grade) {
                     Ok(_) => {}
-                    Err(err) => {
-                        println!("{}", err);
-                    }
+                    Err(err) => println!("{}", err)
                 };
-            },
+            }
+            Ok(3) => {
+                println!("{student_list}");
+            }
             Ok(8) => {
                 break 'main;
-            },
+            }
             Ok(_) => {
                 println!("Opção desconhecida")
-            },
+            }
             Err(_) => {
                 println!("Por favor insira um número válido");
             }
@@ -126,5 +142,4 @@ fn main() {
     // let mut students: student::StudentList = student::StudentList::new(5);
     // students.add(String::from("Aluno1"), 12, 2.5).expect("Erro ao adicionar aluno");
     // students.add(String::from("Aluno2"), 12, 2.5).expect("Erro ao adicionar aluno");
-
 }
