@@ -1,6 +1,6 @@
+use arraystring::{typenum::U30, ArrayString};
 use std::fmt;
-use std::fmt::{Formatter};
-use arraystring::{ArrayString, typenum::U30};
+use std::fmt::{Display, Formatter};
 
 // Types
 pub type Name = ArrayString<U30>;
@@ -14,11 +14,24 @@ pub struct Student {
     grade: Grade,
 }
 
-
 /// Needed for use Student in print!()
 impl fmt::Display for Student {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "Student {}\n\tAge: {}\n\tGrade: {}\n", self.name, self.age, self.grade)
+        write!(
+            f,
+            "Student {}, Age: {}, Grade: {}",
+            self.name, self.age, self.grade
+        )
+    }
+}
+
+impl Display for StudentList {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let mut res: String = String::new();
+        for i in self.0.iter() {
+            res.push_str(format!("{i}").as_str());
+        }
+        write!(f, "{res}")
     }
 }
 
@@ -37,7 +50,7 @@ impl StudentList {
     /// assert!(l.is_empty());
     /// ```
     pub fn new() -> StudentList {
-        StudentList { 0: vec![]}
+        StudentList(vec![])
     }
 
     /// Create a new StudentList with capacity number_of_items.
@@ -49,7 +62,7 @@ impl StudentList {
     /// let l = StudentList::with_capacity(8);
     /// ```
     pub fn with_capacity(number_of_items: u8) -> StudentList {
-        StudentList { 0: Vec::<Student>::with_capacity(usize::from(number_of_items)) }
+        StudentList(Vec::<Student>::with_capacity(usize::from(number_of_items)))
     }
 
     /// Add a new Student to StudentList only if StudentList.len() < StudentList.capacity().
@@ -62,20 +75,19 @@ impl StudentList {
     /// ```
     ///
     pub fn add(&mut self, name: Name, age: Age, grade: Grade) -> Result<&Student, &str> {
-        if &self.0.len() >= &self.0.capacity() {
+        if self.0.len() >= self.0.capacity() {
             return Err("Limite de usuários excedido");
         }
         match self.get_by_name(name) {
-             Some(_) => Err("Nome já existe na coleção"),
-             None => {
-                 self.0.push(
-                     Student { name, age, grade });
-                 Ok(self.0.last().unwrap())
-             }
+            Some(_) => Err("Nome já existe na coleção"),
+            None => {
+                self.0.push(Student { name, age, grade });
+                Ok(self.0.last().unwrap())
+            }
         }
     }
 
-    /// Returns a Option<Student, None> searching for name.
+    /// Returns an Option<Student, None> searching for name.
     ///
     /// # Examples
     /// ```
@@ -84,12 +96,7 @@ impl StudentList {
     /// let a = l.get_by_name(Name::try_from_str("Student Name"));
     /// ```
     pub fn get_by_name(&self, name: Name) -> Option<&Student> {
-        for i in self.0.iter() {
-            if i.name == name {
-                return Some(i);
-            }
-        }
-        None
+        self.0.iter().find(|&i| i.name == name)
     }
 
     /// Returns a Option<Student, None> searching for age.
@@ -101,15 +108,10 @@ impl StudentList {
     /// let a = l.get_by_age(25);
     /// ```
     pub fn get_by_age(&self, age: Age) -> Option<&Student> {
-        for i in self.0.iter() {
-            if i.age == age {
-                return Some(i);
-            }
-        }
-        None
+        self.0.iter().find(|&i| i.age == age)
     }
 
-    /// Returns a Option<Student, None> searching for grade.
+    /// Returns an Option<Student, None> searching for grade.
     ///
     /// # Examples
     /// ```
@@ -118,12 +120,7 @@ impl StudentList {
     /// let a = l.get_by_age(10);
     /// ```
     pub fn get_by_grade(&self, grade: Grade) -> Option<&Student> {
-        for i in self.0.iter() {
-            if i.grade == grade {
-                return Some(i);
-            }
-        }
-        None
+        self.0.iter().find(|&i| i.grade == grade)
     }
 
     /// Removes a Student from StudentList by name and returns Ok() if found.
