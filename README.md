@@ -11,12 +11,13 @@ Implemente o TAD Collection Genérico e o utilize para fazer um programa com os 
   - [X] Um campo float
 - [ ] Implemente as seguintes operações:
   - [X] Criar uma coleção
-  - [ ] Inserir um TIPO ESCOLHIDO na coleção
-  - [ ] Remover um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
-  - [ ] Consultar um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
-  - [ ] Listar os elementos na coleção
-  - [ ] Destruir a coleção se estiver vazia
-  - [ ] Esvaziar a coleção
+  - [X] Inserir um TIPO ESCOLHIDO na coleção
+  - [X] Remover um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
+  - [X] Consultar um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
+  - [X] Listar os elementos na coleção
+  - [X] Destruir a coleção se estiver vazia
+  - [X] Esvaziar a coleção
+- [X] Não imprima nada dentro de uma função que não seja a main()
 
 ### Roteiro para teste
 1 - Crie uma coleção \
