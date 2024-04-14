@@ -37,7 +37,7 @@ pub struct Student {
 /// Needed for use Student in print!()
 impl fmt::Display for Student {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
+        writeln!(
             f,
             "Student {}, Age: {}, Grade: {}",
             self.name, self.age, self.grade
