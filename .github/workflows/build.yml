@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run tests
         run: cargo test --verbose
       - name: Build
@@ -22,13 +22,14 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: linux_x64
           path: target/release/colecoes_ed_rust
 
   macos:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run tests
         run: cargo test --verbose
       - name: Build
@@ -36,13 +37,14 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: macOS_x64
           path: target/release/colecoes_ed_rust
 
   windows:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run tests
         run: cargo test --verbose
       - name: Build
@@ -50,4 +52,5 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: windows_x64
           path: target/release/colecoes_ed_rust.exe
