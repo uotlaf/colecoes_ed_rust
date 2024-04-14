@@ -1,7 +1,7 @@
 # TAD COLLECTION GENÉRICO - Reimplementado em [RUST](https://www.rust-lang.org)
 Trabalho original disponível em [colecoes_ed](https://github.com/uotlaf/colecoes_ed/)
 
-![Menu principal](docs/menu.png)
+<img src="docs/menu.png" alt="Esta é uma imagem do menu principal" width="400" height="auto" title="Menu principal"/>
 
 ### Descrição
 Implemente o TAD Collection Genérico e o utilize para fazer um programa com os seguintes requisitos(obrigatório utilizar a mesma API):
