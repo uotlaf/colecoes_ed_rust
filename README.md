@@ -1,6 +1,8 @@
 # TAD COLLECTION GENÉRICO - Reimplementado em [RUST](https://www.rust-lang.org)
 Trabalho original disponível em [colecoes_ed](https://github.com/uotlaf/colecoes_ed/)
 
+![Menu principal](docs/menu.png)
+
 ### Descrição
 Implemente o TAD Collection Genérico e o utilize para fazer um programa com os seguintes requisitos(obrigatório utilizar a mesma API):
 
