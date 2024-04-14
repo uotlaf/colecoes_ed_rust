@@ -1,17 +1,37 @@
 use arraystring::{typenum::U30, ArrayString};
 use std::fmt;
 use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
 // Types
 pub type Name = ArrayString<U30>;
 pub type Age = u8;
 pub type Grade = f32;
 
+pub enum SearchOption {
+    Name,
+    Age,
+    Grade
+}
+
+impl FromStr for SearchOption {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.chars().next().unwrap() {
+            '1' => Ok(SearchOption::Name),
+            '2' => Ok(SearchOption::Age),
+            '3' => Ok(SearchOption::Grade),
+            _ => Err(())
+        }
+    }
+}
+
 /// Generic structure chosen for this TAD
 pub struct Student {
-    name: Name, // Size for each name is fixed
-    age: Age,
-    grade: Grade,
+    pub name: Name, // Size for each name is fixed
+    pub age: Age,
+    pub grade: Grade,
 }
 
 /// Needed for use Student in print!()
@@ -132,13 +152,48 @@ impl StudentList {
     /// l.remove(Name::try_from_str("Student Name"));
     /// assert_eq!(l.len(), 0);
     /// ```
-    pub fn remove(&mut self, name: Name) -> Result<&str, &str> {
-        if let Some(index) = self.0.iter().position(|n| n.name == name) {
+    pub fn remove_by_name(&mut self, student: Name) -> Result<&str, &str> {
+        if let Some(index) = self.0.iter().position(|n| n.name == student) {
             self.0.swap_remove(index);
             return Ok("");
         }
         Err("Aluno não encontrado")
     }
+
+    /// Removes a Student from StudentList by age and returns Ok() if found.
+    ///
+    /// # Examples
+    /// ```
+    /// let l = StudentList::with_capacity(1);
+    /// l.add(Name::try_from_str("Student Name"), 25, 10);
+    /// l.remove(25);
+    /// assert_eq!(l.len(), 0);
+    /// ```
+    pub fn remove_by_age(&mut self, student: Age) -> Result<&str, &str> {
+        if let Some(index) = self.0.iter().position(|n| n.age == student) {
+            self.0.swap_remove(index);
+            return Ok("");
+        }
+        Err("Aluno não encontrado")
+    }
+
+    /// Removes a Student from StudentList by grade and returns Ok() if found.
+    ///
+    /// # Examples
+    /// ```
+    /// let l = StudentList::with_capacity(1);
+    /// l.add(Name::try_from_str("Student Name"), 25, 10);
+    /// l.remove(10);
+    /// assert_eq!(l.len(), 0);
+    /// ```
+    pub fn remove_by_grade(&mut self, student: Grade) -> Result<&str, &str> {
+        if let Some(index) = self.0.iter().position(|n| n.grade == student) {
+            self.0.swap_remove(index);
+            return Ok("");
+        }
+        Err("Aluno não encontrado")
+    }
+
 
     /// Returns the total number of Student the StudentList can hold.
     ///
