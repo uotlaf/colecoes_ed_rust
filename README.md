@@ -9,7 +9,7 @@ Implemente o TAD Collection Genérico e o utilize para fazer um programa com os 
   - [X] Um campo char[30]
   - [X] Um campo inteiro
   - [X] Um campo float
-- [ ] Implemente as seguintes operações:
+- [X] Implemente as seguintes operações:
   - [X] Criar uma coleção
   - [X] Inserir um TIPO ESCOLHIDO na coleção
   - [X] Remover um TIPO ESCOLHIDO na coleção identificado pelo campo char, int e float
